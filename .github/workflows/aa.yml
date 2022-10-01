@@ -7,6 +7,9 @@ on:
 
 env:
   aws-region: us-east-1
+  aws_s3_bucket: myybuc
+  tfstate_file: new.tfstate
+  dynamodb_table: table-11
   
 jobs:
   terraform1:
@@ -35,7 +38,7 @@ jobs:
       
       - name: terraform init
         run: 
-          terraform init
+          terraform init -backend-config="bucket=$aws_s3_bucket" -backend-config="key=$new.tfstate" -backend-config="dynamodb_table=$dynamodb_table"
       - name: terraform validate
         run: 
           terraform validate
